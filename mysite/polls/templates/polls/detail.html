@@ -1,0 +1,10 @@
+<section>
+<header>
+<h3>{{ question.question_text }}</h3>
+</header>
+<ul>
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
+</section>
