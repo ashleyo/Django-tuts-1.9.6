@@ -1,0 +1,9 @@
+li a {
+    color: green;
+}
+
+body {
+    /*background: white url('../img/background.jpg');*/
+}
+
+#outer-content-wrapper { width: 80%; }
