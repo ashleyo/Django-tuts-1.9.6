@@ -19,26 +19,14 @@
 <form class="form-signin" method="post" action="{% url 'wiki:login' %}">
 {% csrf_token %}
 <h2 class="form-signin-heading">Please sign in</h2>
-<label for="id_username">{{ form.username.label_tag }}</label>{{ form.username }}
-<label for="id_password">{{ form.password.label_tag }}</label>{{ form.password }}
+<p><label for="id_username">{{ form.username.label_tag }}</label>{{ form.username }}</p>
+<p><label for="id_password">{{ form.password.label_tag }}</label>{{ form.password }}</p>
 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>   
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
 {# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'wiki:password_reset' %}">Lost password?</a></p>
+<p class="form-signin"><a href="{% url 'wiki:password_reset' %}">Lost password?</a></p>
 </div>
 {% endblock %}
 
-<!--
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
--->
