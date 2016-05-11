@@ -1,14 +1,19 @@
 from django.conf.urls import url, include
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 app_name = 'wiki'
 
 
-urlpatterns = [
-    url('^', include('django.contrib.auth.urls'))
-]
+# urlpatterns = [
+    # url('^', include('django.contrib.auth.urls'))
+# ]
 
+urlpatterns = [
+    url(r'^login/$', auth_views.login, {'template_name': 'wiki/registration/login.html'}, name='login'),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'wiki/registration/logged_out.html'}, name='logout'),
+]
 # above includes ....
 # Note that this means you cannot have wiki pages called login, logout, etc
 # A TODO is probably to give these a prefix to remove that restriction

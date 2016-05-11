@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 from .models import Page
 
@@ -8,7 +9,7 @@ import logging
 logger = logging.getLogger('django')
 
 # Create your views here.
-
+@login_required(login_url='wiki:login')
 def edit_page(request, page_name):
     try:
         page = Page.objects.get(pk=page_name)
@@ -17,7 +18,7 @@ def edit_page(request, page_name):
         content=''
     return render(request,'wiki/edit_page.html', { 'page_name':page_name, 'content':content})
     
-    
+@login_required(login_url='wiki:login')    
 def save_page(request, page_name):
     content = request.POST["content"]
     try:

@@ -24,9 +24,10 @@
 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>   
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p class="form-signin"><a href="{% url 'wiki:password_reset' %}">Lost password?</a></p>
+<footer>
+<p><a href="{% url 'wiki:logout' %}">Logout</a><p>
+<p>No account? <a href="{% url 'wiki:register' %}">Register</a>
+</footer>
 </div>
 {% endblock %}
 
