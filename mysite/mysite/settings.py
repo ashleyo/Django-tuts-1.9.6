@@ -84,6 +84,17 @@ DATABASES = {
     }
 }
 
+#MYSQL via NAS example
+#DATABASES = {
+#    'default': {
+#        'HOST': '192.168.1.253',
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'django_app',
+#        'USER': 'django_user',
+#        'PASSWORD': 'password',
+ #   }
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators

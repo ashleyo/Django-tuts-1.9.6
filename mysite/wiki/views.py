@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .models import Page
+from .models import Page, NavItem
+
+nav = NavItem.objects.all()
 
 import logging
 logger = logging.getLogger('django')
@@ -36,7 +38,7 @@ def view_page(request, page_name):
         content = page.content
     except Page.DoesNotExist:
         return render(request,'wiki/create_page.html', { 'page_name':page_name})
-    return render(request, 'wiki/view_page.html', {'page_name':page_name, 'content':content})
+    return render(request, 'wiki/view_page.html', {'page_name':page_name, 'content':content, 'navitems':nav})
     
 def register_page(request):
     if request.method == 'POST':
