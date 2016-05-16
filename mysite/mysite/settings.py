@@ -84,6 +84,17 @@ DATABASES = {
     }
 }
 
+#MYSQL via NAS example
+#DATABASES = {
+#    'default': {
+#        'HOST': '192.168.1.253',
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'django_app',
+#        'USER': 'django_user',
+#        'PASSWORD': 'password',
+ #   }
+#}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -124,4 +135,20 @@ USE_TZ = True
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/wiki/Start/'
 LOGIN_URL = '/wiki/login/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
 

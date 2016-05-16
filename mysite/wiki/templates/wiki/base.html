@@ -9,20 +9,33 @@
     <title>Django 101 Template</title>
 
     <!-- Bootstrap -->
-    <link href="{% static 'polls/css/bootstrap.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'polls/css/styles.css' %}">
+    <link href="{% static 'wiki/css/bootstrap.css' %}" rel="stylesheet">
+    <link href="{% static 'wiki/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'wiki/css/styles.css' %}">
   </head>
+  
   <body>
+
+    <div class="container">
+    {% if navitems %} 
+    <nav class="navbar"><div class="navbar-inner"><ul class="nav nav-pills">
+     {% for item in navitems %}          
+     <li><a href="{% url item.redirect %}">{{ item.display }}</a></li>
+     {% endfor %} 
+    </ul></div></nav>
+    {% endif %}
+    </div>
     
     <div id='outer-content-wrapper'>
-    
     {% block content %}
     Missing Content
     {% endblock %}
     </div>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{% static 'polls/js/bootstrap.js' %}"></script>
+    <script src="{% static 'wiki/js/bootstrap.js' %}"></script>
+
   </body>
 </html>
