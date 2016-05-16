@@ -1,12 +1,13 @@
 {% extends 'wiki/base.html' %}
 {% load wiki_markdown %}
-
+{% block title %}View {{ page_name }}{% endblock %}
 {% block content %}
+    <header><h2>{{ page_name }}</h2></header>
     <article>
         {{content|markup|safe}} <!-- User input being trusted!! Danger, Will Robinson! Danger! -->
      <footer>
      <hr/>
-     <a href="{% url 'wiki:edit_page' page_name %}">Edit?</a>
+     <a class="btn btn-lg btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a>
      </footer>
     </article>
 {% endblock content %}

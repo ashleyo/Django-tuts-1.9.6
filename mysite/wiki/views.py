@@ -56,5 +56,5 @@ def register_page(request):
         logger.info('Invalid or empty form')
         form = UserCreationForm()
     logger.info('going to registration page')
-    return render(request, 'registration/create_user.html', {'form':form})
+    return render(request, 'wiki/registration/create_user.html', {'form':form})
  

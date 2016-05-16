@@ -1,7 +1,13 @@
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.likeabutton {
+    appearance: button;
+    text-decoration: none;
+    display: inline-block;
+    padding: 2px 8px;
 }
 
 .form-signin {
