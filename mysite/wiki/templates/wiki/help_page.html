@@ -1,0 +1,16 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+<header><h2>Editing Wiki Pages</h2></header>
+<p>To edit content you need to be logged in ...</p>
+<p>If you do not have an account you can <a href="{% url 'wiki:register'}">Register</a>
+<p>Pages may contain ...</p>
+<ul>
+    <li>Text</li>
+    <li>Markdown markup see <a href="https://daringfireball.net/projects/markdown/syntax#autolink">Markdown syntax guide</a></li>
+    <li>HTML</li>
+    <li>Legal identifiers enclosed in double square brackets will be automatically turned into page links e.g. [[Start]]
+        These do not have to pre-exist - if you then click on the link created you will be asked to create the page.
+    </li>
+</ul>       
+{% endblock content %}
