@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import SearchForm
 from .models import Page, NavItem
 
-nav = NavItem.objects.all()
+nav = NavItem.objects.order_by('priority')[:]
 
 import logging
 logger = logging.getLogger('django')
