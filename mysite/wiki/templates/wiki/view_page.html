@@ -3,11 +3,8 @@
 {% block title %}View {{ page_name }}{% endblock %}
 {% block content %}
     <header><h2>{{ page_name }}</h2></header>
-    <article>
         {{content|markup|wikify|safe}} <!-- User input being trusted!! Danger, Will Robinson! Danger! -->
      <footer>
-     <hr/>
-     <a class="btn btn-lg btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a>
+     <p><a class="btn btn-lg btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a></p>
      </footer>
-    </article>
 {% endblock content %}

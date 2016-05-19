@@ -17,35 +17,44 @@
   </head>
   
   <body>
-    {% block navigation %}
-    <div id="nav-container" class="container">
+        <div id="outer-container" class="container">  
+        {% block navigation %}
         {% if navitems %} 
-        <nav class="navbar">
+        <nav class="navbar col-lg-offset-1 col-lg-10">
             <div class="navbar-inner">
                 <ul class="nav nav-pills">
                     {% for item in navitems %}          
                     <li role="presentation">
+                        {% if item.redirectPage %}
+                        <a href="{% url item.redirect item.redirectPage %}">{{ item.display }}</a>
+                        {% else %}
                         <a href="{% url item.redirect %}">{{ item.display }}</a>
+                        {% endif %}
                     </li>
                     {% endfor %} 
                 </ul>
             </div>
         </nav>
         {% endif %}
-    </div>
+    
     {% endblock navigation %}
     
-    <div id='outer-content-wrapper' class="well well-lg">
-    {% block content %}
-    Missing Content
-    {% endblock %}
-    </div>
+    <article class="col-lg-offset-1 col-lg-10">
+        <section id='inner-content-wrapper' class="well well-lg">
+        {% block content %}
+        Missing Content
+        {% endblock %}
+        </section>
+    </article>
+    
+     
        
-    <footer>
+    <footer class="col-lg-12 col-lg-offset-1">
     {% block footer %}
     <h6>&copy; A P Oliver 2016</h6>
     {% endblock %}
     </footer>
+    </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
