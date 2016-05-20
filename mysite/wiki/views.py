@@ -18,7 +18,10 @@ def SearchPageView(request):
     else:
         form = SearchForm(request.POST)
         if form.is_valid():
-            pages = Page.objects.filter(name__contains = form.cleaned_data["text"])  
+            pages = Page.objects.filter(name__contains = form.cleaned_data["text"]) 
+            contents = []
+            if form.cleaned_data["search_content"]:
+                pages = Page.objects.filter(content__contains = form.cleaned_data["text"]) 
             return render(request,'wiki/search_page.html', {"form":form, "pages":pages}) 
     return render(request, 'wiki/search_page.html', {"form":form})        
 
