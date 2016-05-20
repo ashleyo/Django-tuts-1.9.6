@@ -4,7 +4,7 @@
 {% block content %}
     <header><h2>{{ page_name }}</h2></header>
         {{content|markup|wikify|safe}} <!-- User input being trusted!! Danger, Will Robinson! Danger! -->
-     <footer>
-     <p><a class="btn btn-lg btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a></p>
+     <footer class="container">
+     <p class="col-lg-2"><a class="btn btn-md btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a></p>
      </footer>
 {% endblock content %}
