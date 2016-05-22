@@ -3,8 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
-from .forms import SearchForm
-from .models import Page, NavItem, Tag
+from .forms import SearchForm, UploadFileForm
+from .models import Page, NavItem, Tag, UserFileUpload
 
 nav = NavItem.objects.order_by('priority')[:]
 
@@ -105,3 +105,13 @@ def view_tag(request, tag_name):
         tag = Tag.objects.get(pk=tag_name)
         pages = tag.page_set.all()
     return render(request,'wiki/view_tag.html',{"tag_name":tag_name, "pages": pages})
+    
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UploadFileForm()
+    return render(request, 'wiki/upload.html', {'form':form})
+    

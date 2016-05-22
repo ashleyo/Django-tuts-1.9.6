@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import ModelForm
+from .models import UserFileUpload
 
 class SearchForm(forms.Form):
     text = forms.CharField(
@@ -11,3 +13,7 @@ class SearchForm(forms.Form):
         #widget=forms.CheckboxInput(attrs={'class':'form-control'})
     )
     
+class UploadFileForm(ModelForm):
+    class Meta:
+        model = UserFileUpload
+        fields = ['upload' ]

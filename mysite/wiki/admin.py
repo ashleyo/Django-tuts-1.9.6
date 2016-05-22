@@ -1,8 +1,9 @@
 from django.contrib import admin
 
-from .models import Page, NavItem, Tag
+from .models import Page, NavItem, Tag, UserFileUpload
 
 admin.site.register(Page)
 admin.site.register(NavItem)
 #stopgap, we really need to be able to associate Tags with Pages in the admin
 admin.site.register(Tag)
+admin.site.register(UserFileUpload)
