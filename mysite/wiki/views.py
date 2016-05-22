@@ -12,7 +12,7 @@ import logging
 logger = logging.getLogger('django')
 
 
-StaticPages = { "Index":None, "Search": None, "Help": None}
+StaticPages = { "Index":None, "Search": None, "Help": None, "Upload": None}
 
 def SearchPageView(request):
     if not request.method == 'POST':
@@ -104,7 +104,7 @@ def view_tag(request, tag_name):
     else:
         tag = Tag.objects.get(pk=tag_name)
         pages = tag.page_set.all()
-    return render(request,'wiki/view_tag.html',{"tag_name":tag_name, "pages": pages})
+    return render(request,'wiki/view_tag.html',{"tag_name":tag_name, "pages": pages,'navitems':nav,})
     
 def upload_file(request):
     if request.method == 'POST':
@@ -113,5 +113,6 @@ def upload_file(request):
             form.save()
     else:
         form = UploadFileForm()
-    return render(request, 'wiki/upload.html', {'form':form})
-    
+    files = UserFileUpload.objects.all().order_by('upload')
+    return render(request, 'wiki/upload.html', {'form':form, 'files':files,'navitems':nav,})
+StaticPages["Upload"] = upload_file    

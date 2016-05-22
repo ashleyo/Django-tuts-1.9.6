@@ -1,4 +1,5 @@
 {% extends 'wiki/base.html' %}
+{% load static %}
 {% block title %}Upload{% endblock %}
 {% block content %}
     <h1>Uploaded Files</h1>
@@ -7,5 +8,13 @@
         {{form}}    
     <input type='submit' value="Upload">
     </form/>
-   
+{% if files %}
+    <ul>
+    {% for file in files %}
+    <li><a href="{{file.upload.url}}">{{file.upload.name}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+<p>No uploaded files</p>
+{% endif %}
 {% endblock %}

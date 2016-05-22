@@ -33,5 +33,5 @@ urlpatterns += [
     url(r'^page/(?P<page_name>[^/]+)/$', views.view_page, name='view_page'),
     url(r'^tag/(?P<tag_name>[^/]+)/$', views.view_tag, name='view_tag'),
     url(r'^upload/$', views.upload_file, name='upload_page' ),
-
 ]
+
