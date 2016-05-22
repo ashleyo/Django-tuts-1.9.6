@@ -54,8 +54,9 @@ def edit_page(request, page_name):
 @login_required(login_url='wiki:login')    
 def save_page(request, page_name):
     content = request.POST["content"]
+    tags_on_form = request.POST["tags"].title()
     taglist = [
-            Tag.objects.get_or_create(name=tag)[0] for tag in request.POST["tags"].split()
+            Tag.objects.get_or_create(name=tag)[0] for tag in tags_on_form.split()
             ] if "tags" in request.POST else []       
     try:
         page = Page.objects.get(pk=page_name)
@@ -74,7 +75,6 @@ def view_page(request, page_name):
         return StaticPages[page_name](request)
     try:
         page = Page.objects.get(pk=page_name)
-        #content = page.content
     except Page.DoesNotExist:
         return render(request,'wiki/create_page.html', { 'page_name':page_name})
     return render(request, 'wiki/view_page.html', {
