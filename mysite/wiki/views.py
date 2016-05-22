@@ -4,13 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import SearchForm
-from .models import Page, NavItem
+from .models import Page, NavItem, Tag
 
 nav = NavItem.objects.order_by('priority')[:]
 
 import logging
 logger = logging.getLogger('django')
 
+
+StaticPages = { "Index":None, "Search": None, "Help": None}
 
 def SearchPageView(request):
     if not request.method == 'POST':
@@ -23,14 +25,19 @@ def SearchPageView(request):
             if form.cleaned_data["search_content"]:
                 pages = Page.objects.filter(content__contains = form.cleaned_data["text"]) 
             return render(request,'wiki/search_page.html', {"form":form, "pages":pages}) 
-    return render(request, 'wiki/search_page.html', {"form":form})        
+    return render(request, 'wiki/search_page.html', {"form":form})   
+StaticPages["Search"] = SearchPageView     
 
 def HelpPageView(request):
     return render(request, 'wiki/help_page.html')
-
-StaticPages = { "Search": SearchPageView, "Help": HelpPageView}
-
-
+StaticPages["Help"] = HelpPageView
+    
+def IndexPageView(request):
+    pages=Page.objects.all().order_by('name')
+    special_pages = StaticPages.keys()
+    return render(request, 'wiki/index_page.html', {"pages":pages, "special_pages": special_pages})
+    
+StaticPages["Index"] = IndexPageView
 
 # Create your views here.
 @login_required(login_url='wiki:login')
@@ -38,18 +45,26 @@ def edit_page(request, page_name):
     try:
         page = Page.objects.get(pk=page_name)
         content = page.content
+        tags = " ".join([ tag.name for tag in page.tags.all() ])
     except Page.DoesNotExist:
         content=''
-    return render(request,'wiki/edit_page.html', { 'page_name':page_name, 'content':content})
+        tags=''
+    return render(request,'wiki/edit_page.html', { 'page_name':page_name, 'content':content, "tags":tags})
     
 @login_required(login_url='wiki:login')    
 def save_page(request, page_name):
     content = request.POST["content"]
+    taglist = [
+            Tag.objects.get_or_create(name=tag)[0] for tag in request.POST["tags"].split()
+            ] if "tags" in request.POST else []       
     try:
         page = Page.objects.get(pk=page_name)
         page.content = content
     except Page.DoesNotExist:
         page = Page(name=page_name, content=content)
+    finally:
+        for tag in taglist:
+            page.tags.add(tag)
     page.save()
     return redirect('wiki:view_page', page_name=page_name)
         
@@ -59,10 +74,15 @@ def view_page(request, page_name):
         return StaticPages[page_name](request)
     try:
         page = Page.objects.get(pk=page_name)
-        content = page.content
+        #content = page.content
     except Page.DoesNotExist:
         return render(request,'wiki/create_page.html', { 'page_name':page_name})
-    return render(request, 'wiki/view_page.html', {'page_name':page_name, 'content':content, 'navitems':nav})
+    return render(request, 'wiki/view_page.html', {
+        'page_name':page_name, 
+        'content':page.content,
+        'tags':page.tags.all(), 
+        'navitems':nav,
+        })
     
 def register_page(request):
     if request.method == 'POST':
@@ -77,4 +97,11 @@ def register_page(request):
     else:
         form = UserCreationForm()
     return render(request, 'wiki/registration/create_user.html', {'form':form})
- 
+    
+def view_tag(request, tag_name):
+    if tag_name.upper() == 'ALL':
+        pages = Page.objects.all()
+    else:
+        tag = Tag.objects.get(pk=tag_name)
+        pages = tag.page_set.all()
+    return render(request,'wiki/view_tag.html',{"tag_name":tag_name, "pages": pages})

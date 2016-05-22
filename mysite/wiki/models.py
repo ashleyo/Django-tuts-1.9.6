@@ -2,7 +2,10 @@ from django.db import models
 
 # Create your models here.
 class Tag(models.Model):
+    ##TODO make tags save in consistent case regardless of how entered
     name = models.CharField(max_length=20, primary_key=True)
+    def __str__(self):
+        return self.name
 
 
 class Page(models.Model):

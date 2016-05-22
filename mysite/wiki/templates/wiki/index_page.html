@@ -1,0 +1,21 @@
+{% extends 'wiki/base.html' %}
+{% load wiki_tags %}
+{% block title %}Index{% endblock %}
+{% block content %}
+    <header><h2>Index</h2></header>
+        <h3>Pages</h3>
+        <ul>
+        {% for page in pages %}
+            <li><a href="{% url 'wiki:view_page' page.name %}">{{ page.name }}</a></li>
+        {% endfor %} 
+        </ul>
+
+        <h3>Special Pages</h3>
+        <ul>
+        {% for page in special_pages %}
+            <li><a href="{% url 'wiki:view_page' page %}">{{page}}</a></li>
+        {% endfor %} 
+        </ul>   
+     <footer class="container">
+     </footer>
+{% endblock content %}

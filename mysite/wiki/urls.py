@@ -13,6 +13,7 @@ app_name = 'wiki'
 urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': 'wiki/registration/login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'wiki/registration/logged_out.html'}, name='logout'),
+    url(r'^register/$', views.register_page, name='register'),
 ]
 # above includes ....
 # Note that this means you cannot have wiki pages called login, logout, etc
@@ -27,14 +28,9 @@ urlpatterns = [
 #^reset/done/$ [name='password_reset_complete']
 
 urlpatterns += [
-    #ex: /polls/
-    url(r'^register/$', views.register_page, name='register'),
-] 
-
-urlpatterns += [
-    #ex: /polls/
-    url(r'^(?P<page_name>[^/]+)/edit/$', views.edit_page, name='edit_page'),
-    url(r'^(?P<page_name>[^/]+)/save/$', views.save_page, name='save_page'),
-    url(r'^(?P<page_name>[^/]+)/$', views.view_page, name='view_page'),
+    url(r'^page/(?P<page_name>[^/]+)/edit/$', views.edit_page, name='edit_page'),
+    url(r'^page/(?P<page_name>[^/]+)/save/$', views.save_page, name='save_page'),
+    url(r'^page/(?P<page_name>[^/]+)/$', views.view_page, name='view_page'),
+    url(r'^tag/(?P<tag_name>[^/]+)/$', views.view_tag, name='view_tag'),
 
 ]

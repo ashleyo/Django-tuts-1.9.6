@@ -1,0 +1,14 @@
+{% extends 'wiki/base.html' %}
+{% load wiki_tags %}
+{% block title %}Tag {{ page_name }}{% endblock %}
+{% block content %}
+    <header><h2>{{ tag_name }}</h2></header>
+        <ul>
+        {% for page in pages %}
+            <li><a href="{% url 'wiki:view_page' page.name %}">{{ page.name }}</a></li>
+        {% endfor %} 
+           
+        </ul>   
+     <footer class="container">
+     </footer>
+{% endblock content %}

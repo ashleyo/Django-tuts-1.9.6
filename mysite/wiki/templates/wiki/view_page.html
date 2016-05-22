@@ -4,7 +4,9 @@
 {% block content %}
     <header><h2>{{ page_name }}</h2></header>
         {{content|markup|wikify|safe}} <!-- User input being trusted!! Danger, Will Robinson! Danger! -->
+           
      <footer class="container">
+     <p class="col-lg-6"><span class="label label-info">Tags:</span> {% for tag in tags %} <a href="{% url 'wiki:view_tag' tag_name=tag.name %}">{{tag.name}}</a> {% endfor %}</p>
      <p class="col-lg-2"><a class="btn btn-md btn-primary btn-block" href="{% url 'wiki:edit_page' page_name %}">Edit?</a></p>
      </footer>
 {% endblock content %}
