@@ -1,8 +1,8 @@
 {% extends 'wiki/base.html' %}
 {% load wiki_tags %}
 {% block title %}View {{ page_name }}{% endblock %}
+{% block pageheader %}{{ page_name }}{% endblock %}
 {% block content %}
-    <header><h2>{{ page_name }}</h2></header>
         {{content|markup|wikify|safe}} <!-- User input being trusted!! Danger, Will Robinson! Danger! -->
            
      <footer class="container">

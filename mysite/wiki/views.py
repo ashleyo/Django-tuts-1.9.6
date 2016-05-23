@@ -24,18 +24,18 @@ def SearchPageView(request):
             contents = []
             if form.cleaned_data["search_content"]:
                 pages = Page.objects.filter(content__contains = form.cleaned_data["text"]) 
-            return render(request,'wiki/search_page.html', {"form":form, "pages":pages}) 
-    return render(request, 'wiki/search_page.html', {"form":form})   
+            return render(request,'wiki/search_page.html', {"form":form, "pages":pages,'navitems':nav,}) 
+    return render(request, 'wiki/search_page.html', {"form":form,'navitems':nav,})   
 StaticPages["Search"] = SearchPageView     
 
 def HelpPageView(request):
-    return render(request, 'wiki/help_page.html')
+    return render(request, 'wiki/help_page.html',{'navitems':nav,})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
     pages=Page.objects.all().order_by('name')
     special_pages = StaticPages.keys()
-    return render(request, 'wiki/index_page.html', {"pages":pages, "special_pages": special_pages})
+    return render(request, 'wiki/index_page.html', {"pages":pages, "special_pages": special_pages,'navitems':nav,})
     
 StaticPages["Index"] = IndexPageView
 

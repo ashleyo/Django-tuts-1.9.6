@@ -10,8 +10,7 @@ class SearchForm(forms.Form):
     search_content= forms.BooleanField(
         required=False,
         label="Search content?",
-        #widget=forms.CheckboxInput(attrs={'class':'form-control'})
-    )
+        )
     
 class UploadFileForm(ModelForm):
     class Meta:
