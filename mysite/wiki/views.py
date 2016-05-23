@@ -13,29 +13,32 @@ logger = logging.getLogger('django')
 
 
 StaticPages = { "Index":None, "Search": None, "Help": None, "Upload": None}
-
+ 
 def SearchPageView(request):
+    context = {'navitems':nav}
     if not request.method == 'POST':
         form = SearchForm()
     else:
         form = SearchForm(request.POST)
         if form.is_valid():
-            pages = Page.objects.filter(name__contains = form.cleaned_data["text"]) 
-            contents = []
             if form.cleaned_data["search_content"]:
                 pages = Page.objects.filter(content__contains = form.cleaned_data["text"]) 
-            return render(request,'wiki/search_page.html', {"form":form, "pages":pages,'navitems':nav,}) 
-    return render(request, 'wiki/search_page.html', {"form":form,'navitems':nav,})   
+            else:
+                pages = Page.objects.filter(name__contains = form.cleaned_data["text"])
+            context['pages'] = pages
+    context['form'] = form
+    return render(request, 'wiki/search_page.html', context)
 StaticPages["Search"] = SearchPageView     
 
 def HelpPageView(request):
-    return render(request, 'wiki/help_page.html',{'navitems':nav,})
+    return render(request, 'wiki/help_page.html', {'navitems':nav,})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
-    pages=Page.objects.all().order_by('name')
-    special_pages = StaticPages.keys()
-    return render(request, 'wiki/index_page.html', {"pages":pages, "special_pages": special_pages,'navitems':nav,})
+    context = {'navitems':nav}
+    context['pages'] = Page.objects.all().order_by('name')
+    context['special_pages'] = StaticPages.keys()
+    return render(request, 'wiki/index_page.html', context)
     
 StaticPages["Index"] = IndexPageView
 
@@ -99,20 +102,23 @@ def register_page(request):
     return render(request, 'wiki/registration/create_user.html', {'form':form})
     
 def view_tag(request, tag_name):
+    context = {'navitems':nav, 'tag_name':tag_name}
     if tag_name.upper() == 'ALL':
-        pages = Page.objects.all()
+        context['pages'] = Page.objects.all()
     else:
         tag = Tag.objects.get(pk=tag_name)
-        pages = tag.page_set.all()
-    return render(request,'wiki/view_tag.html',{"tag_name":tag_name, "pages": pages,'navitems':nav,})
+        context['pages'] = tag.page_set.all()
+    return render(request,'wiki/view_tag.html', context)
     
 def upload_file(request):
+    context = {'navitems':nav}
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
     else:
         form = UploadFileForm()
-    files = UserFileUpload.objects.all().order_by('upload')
-    return render(request, 'wiki/upload.html', {'form':form, 'files':files,'navitems':nav,})
+    context['form'] = form
+    context['files'] = UserFileUpload.objects.all().order_by('upload')
+    return render(request, 'wiki/upload.html', context)
 StaticPages["Upload"] = upload_file    
