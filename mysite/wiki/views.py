@@ -9,8 +9,8 @@ from .models import Page, NavItem, Tag, UserFileUpload
 nav = NavItem.objects.order_by('priority')[:]
 
 import logging
-logger = logging.getLogger('django')
-
+logger = logging.getLogger('custom')
+logger.info("Custom logger started")
 
 StaticPages = { "Index":None, "Search": None, "Help": None, "Upload": None}
  
@@ -31,7 +31,8 @@ def SearchPageView(request):
 StaticPages["Search"] = SearchPageView     
 
 def HelpPageView(request):
-    return render(request, 'wiki/help_page.html', {'navitems':nav,})
+    agent = request.META["HTTP_USER_AGENT"]
+    return render(request, 'wiki/help_page.html', {'navitems':nav,'agent':agent})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
@@ -53,7 +54,8 @@ def edit_page(request, page_name):
         content=''
         tags=''
     return render(request,'wiki/edit_page.html', { 'page_name':page_name, 'content':content, "tags":tags})
-    
+
+#could do with a cancel button - only problem is where do we redirect to? 
 @login_required(login_url='wiki:login')    
 def save_page(request, page_name):
     content = request.POST["content"]

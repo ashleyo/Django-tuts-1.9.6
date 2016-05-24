@@ -4,11 +4,15 @@
 {% block pageheader %}Index{% endblock %}
 {% block content %}
         <section><h3>Pages</h3>
+        {% if pages %}
         <ul>
+        
         {% for page in pages %}
             <li><a href="{% url 'wiki:view_page' page.name %}">{{ page.name }}</a></li>
         {% endfor %} 
+        
         </ul>
+        {% endif %}
         </section>
         <section>
         <h3>Special Pages</h3>
