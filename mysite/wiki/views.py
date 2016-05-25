@@ -4,13 +4,34 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .forms import SearchForm, UploadFileForm
-from .models import Page, NavItem, Tag, UserFileUpload
-
-nav = NavItem.objects.order_by('priority')[:]
+from .models import Page, NavItem, Tag, UserFileUpload, HitsCounter
 
 import logging
 logger = logging.getLogger('custom')
 logger.info("Custom logger started")
+
+class HitCounterManager:   
+    @staticmethod
+    def get_instance():
+        try:
+            hc = HitsCounter.objects.get(pk=1)
+        except HitsCounter.DoesNotExist:
+            hc = HitsCounter()
+            hc.reset_counter()
+            hc.save()
+        return hc
+    
+    hc = get_instance.__func__()
+    
+    def process_response(self, request, response):
+        self.hc.counter += 1
+        logger.info("Template rendered. Hit count {}".format(self.hc.counter))
+        self.hc.save()
+        return response
+
+nav = NavItem.objects.order_by('priority')[:]
+
+
 
 StaticPages = { "Index":None, "Search": None, "Help": None, "Upload": None}
  
@@ -32,7 +53,8 @@ StaticPages["Search"] = SearchPageView
 
 def HelpPageView(request):
     agent = request.META["HTTP_USER_AGENT"]
-    return render(request, 'wiki/help_page.html', {'navitems':nav,'agent':agent})
+    hits = HitCounterManager.hc.counter
+    return render(request, 'wiki/help_page.html', {'hits':hits, 'navitems':nav,'agent':agent})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
