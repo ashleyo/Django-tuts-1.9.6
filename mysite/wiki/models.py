@@ -36,3 +36,18 @@ class UserFileUpload(models.Model):
     def __str__(self):
         return self.upload.name
    
+class HitsCounter(models.Model):
+    _singleton_instance_id = 1
+    counter = models.IntegerField()
+    
+    def reset_counter(self):
+        self.counter = 0;
+
+    def save(self, *args, **kwargs):
+        self.pk = self._singleton_instance_id
+        super(HitsCounter, self).save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+        
+    
