@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
 
@@ -6,12 +6,13 @@ from .models import Post
 def post_create(request):
     return HttpResponse("<h1>Create</h1>")
 
-def post_detail(request):
-    return HttpResponse("<h1>Detail</h1>")
+def post_detail(request,postTitle=""):
+    context = get_object_or_404(Post,title=postTitle)
+    return render(request, 'blog/post_detail.html', {'post':context})
     
 def post_list(request):
-    posts = Post.objects.all()
-    return render(request, 'blog/index.html', {'posts':posts})
+    context = Post.objects.all()
+    return render(request, 'blog/index.html', {'posts':context})
     
 def post_update(request):
     return HttpResponse("<h1>Update</h1>")

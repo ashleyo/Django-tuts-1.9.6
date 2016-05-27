@@ -1,0 +1,10 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<h1>Detail Template</h1>
+{% if post %}
+    <p>{{ post.title }}</p>
+    <p>{{ post.content}}</p>
+{% else %}
+Post not found
+{% endif %}
+{% endblock %}

@@ -1,6 +1,9 @@
+{% extends 'blog/base.html' %}
+{% block content %}
 <h1>List Template</h1>
 <ul>
 {% for post in posts %}
 <li>{{ post.title }}</li>
 {% endfor %}
 <ul>
+{% endblock %}
