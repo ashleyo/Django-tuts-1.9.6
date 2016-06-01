@@ -2,13 +2,13 @@
 {% block title %}{{ block.super }}{{ page.id }}{% endblock %}
 
 {% block content %}
-<h3>Post Detail </h3>
 {% if post %}
-    <p>Post {{post.id}} Created {{post.timestamp}} Last Edited {{post.updated}}</p>
-    <article style="border:1px solid lightgrey"> {# TODO move to css #}
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content}}</p>
-    </article>   
+<header><h2>{{ post.title }} <small>Post #{{post.id}} Last Edited {{post.updated}}</small></h2></header>
+
+    <div style="border:1px solid lightgrey"> 
+    <p>{{ post.content|linebreaks}}</p>
+    <footer><h6>Created {{post.timestamp}}</h6></footer>
+    </div>   
 {% else %}
 Post not found
 {% endif %}

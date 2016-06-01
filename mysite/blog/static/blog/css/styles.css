@@ -1,10 +1,11 @@
 html {
-  background-image: url('../img/background.jpg');
+  
 }
 
 body {
   padding-top: 10px;
   padding-bottom: 10px;
+  /*background-image: url('../img/background.jpg');*/
 }
 
 .likeabutton {
