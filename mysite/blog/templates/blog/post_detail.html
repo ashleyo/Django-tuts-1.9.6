@@ -2,7 +2,8 @@
 {% block content %}
 <h1>Detail Template</h1>
 {% if post %}
-    <p>{{ post.title }}</p>
+    {# <p><a href="{%url 'blog:detail' page.id }" >{{ post.title }}</a></p> #}
+    <p>{{ post.title }}</a></p>
     <p>{{ post.content}}</p>
 {% else %}
 Post not found

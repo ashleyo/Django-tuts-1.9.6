@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+# from django.db.models import F
 
 from .forms import SearchForm, UploadFileForm
 from .models import Page, NavItem, Tag, UserFileUpload, HitsCounter
@@ -24,8 +25,10 @@ class HitCounterManager:
     hc = get_instance.__func__()
     
     def process_response(self, request, response):
+        # self.hc.counter = F('counter') + 1
         self.hc.counter += 1
         logger.info("Template rendered. Hit count {}".format(self.hc.counter))
+        #self.hc.save(update_fields=['counter'])
         self.hc.save()
         return response
 
