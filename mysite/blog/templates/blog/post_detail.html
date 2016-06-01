@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+
 {% block content %}
 <h1>Detail Template</h1>
 {% if post %}
@@ -8,4 +9,7 @@
 {% else %}
 Post not found
 {% endif %}
+<a href="{% url 'blog:update' post.id %}"><button>Edit</button></a>
+<a href="{% url 'blog:delete' post.id %}"><button>DELETE</button></a>
+<a href="{% url 'blog:list' %}"><button>List</button></a>
 {% endblock %}

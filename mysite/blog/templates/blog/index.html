@@ -6,4 +6,5 @@
 <li><p><a href="{{ post.get_absolute_url }}" >{{ post.title }}</a></p></li>
 {% endfor %}
 <ul>
+<a href="{% url 'blog:create' %}"><button>New Post</button></a>
 {% endblock %}

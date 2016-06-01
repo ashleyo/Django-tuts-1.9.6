@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from .models import Post
@@ -10,7 +11,10 @@ def post_create(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
-            return redirect('blog:detail', id = instance.pk)
+            messages.success(request, "Post Created")
+            return redirect(instance.get_absolute_url())
+        else:
+            messages.error(request, "Post could not be created")
     context = { 'form': form }
     return render(request, 'blog/post_form.html', context)
 
@@ -25,11 +29,14 @@ def post_list(request):
 def post_update(request, id=None):
     instance = get_object_or_404(Post, id=id)
     form = PostForm(request.POST or None, instance=instance)
-    if form.is_valid():
+    if request.method == 'POST':
+        if form.is_valid():
             instance = form.save(commit=False)
             instance.save()
-            #return redirect('blog:detail', id = instance.pk)
+            messages.success(request, "Post Edited")
             return redirect(instance.get_absolute_url())
+        else:
+            messages.error(request, "Post was not edited")
     context = { 
             'title' : instance.title, 
             'content' : instance.content,
@@ -37,5 +44,9 @@ def post_update(request, id=None):
             }
     return render(request, 'blog/post_form.html', context)
 
-def post_delete(request):
-    return HttpResponse("<h1>Delete</h1>")
+def post_delete(request, id=None):
+    instance = get_object_or_404(Post, id=id)
+    m = "Deleted {} {}".format(instance.id,instance.title)
+    instance.delete()
+    messages.success(request, m)
+    return redirect('blog:list')
