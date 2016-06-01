@@ -1,11 +1,14 @@
 {% extends 'blog/base.html' %}
+{% block title %}{{ block.super }}{{ page.id }}{% endblock %}
 
 {% block content %}
-<h1>Detail Template</h1>
+<h3>Post Detail </h3>
 {% if post %}
-    {# <p><a href="{%url 'blog:detail' page.id }" >{{ post.title }}</a></p> #}
-    <p>{{ post.title }}</a></p>
+    <p>Post {{post.id}} Created {{post.timestamp}} Last Edited {{post.updated}}</p>
+    <article style="border:1px solid lightgrey"> {# TODO move to css #}
+    <h2>{{ post.title }}</h2>
     <p>{{ post.content}}</p>
+    </article>   
 {% else %}
 Post not found
 {% endif %}
