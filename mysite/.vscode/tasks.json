@@ -19,12 +19,5 @@
       "isBuildCommand": false,
       "isTestCommand": false
     }
-    {
-      "taskName": "shell",
-      "args": ["${workspaceRoot}/manage.py", "shell"],
-      "suppressTaskName": true,
-      "isBuildCommand": false,
-      "isTestCommand": false
-    }
   ]
 }
