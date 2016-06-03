@@ -3,21 +3,28 @@
     // for the documentation about the tasks.json format
   "version": "0.1.0",
   "isShellCommand": true,
-  "windows": { "command": "powershell", "args": ["-Command"] },
+  "windows": { "command": "powershell", "args": ["-Command", "${workspaceRoot}/mysite/manage.py"] },
   "tasks": [
     {
       "taskName": "check",
-      "args": ["${workspaceRoot}/manage.py", "check"],
+      "args": ["check"],
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": false
     },
     {
       "taskName": "runserver",
-      "args": ["${workspaceRoot}/manage.py", "runserver"],
+      "args": ["runserver"],
+      "suppressTaskName": true,
+      "isBuildCommand": true,
+      "isTestCommand": false
+    }
+    {
+      "taskName": "test",
+      "args": ["test"],
       "suppressTaskName": true,
       "isBuildCommand": false,
-      "isTestCommand": false
+      "isTestCommand": true
     }
   ]
 }
