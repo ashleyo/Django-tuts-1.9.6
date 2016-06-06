@@ -3,25 +3,39 @@
     // for the documentation about the tasks.json format
   "version": "0.1.0",
   "isShellCommand": true,
-  "windows": { "command": "powershell", "args": ["-Command", "${workspaceRoot}/mysite/manage.py"] },
+  "windows": { "command": "powershell", "args": ["-Command"] },
   "tasks": [
     {
-      "taskName": "check",
-      "args": ["check"],
+      "taskName": "django check",
+      "args": ["${workspaceRoot}/mysite/manage.py", "check"],
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": false
     },
     {
-      "taskName": "runserver",
-      "args": ["runserver"],
+      "taskName": "django runserver",
+      "args": ["${workspaceRoot}/mysite/manage.py","runserver"],
       "suppressTaskName": true,
       "isBuildCommand": true,
       "isTestCommand": false
+    },
+    {
+      "taskName": "django test",
+      "args": ["${workspaceRoot}/mysite/manage.py","test"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": true
+    },
+    {
+      "taskName": "git status",
+      "args": ["git","status"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": true
     }
     {
-      "taskName": "test",
-      "args": ["test"],
+      "taskName": "git log",
+      "args": ["git","log","--pretty=oneline"],
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": true
