@@ -40,8 +40,8 @@ def post_list(request):
   
     return render(request, 'blog/index.html', {'posts':queryset, 'page_request_var':page_request_var})
     
-def post_update(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def post_update(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
     if request.method == 'POST':
         if form.is_valid():
@@ -58,8 +58,8 @@ def post_update(request, id=None):
             }
     return render(request, 'blog/post_form.html', context)
 
-def post_delete(request, id=None):
-    instance = get_object_or_404(Post, id=id)
+def post_delete(request, slug=None):
+    instance = get_object_or_404(Post, slug=slug)
     m = "Deleted {} {}".format(instance.id,instance.title)
     instance.delete()
     messages.success(request, m)

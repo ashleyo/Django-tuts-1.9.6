@@ -12,7 +12,7 @@
 {% else %}
 Post not found
 {% endif %}
-<a href="{% url 'blog:update' post.id %}"><button>Edit</button></a>
-<a href="{% url 'blog:delete' post.id %}"><button>DELETE</button></a>
+<a href="{% url 'blog:update' post.slug %}"><button>Edit</button></a>
+<a href="{% url 'blog:delete' post.slug %}"><button>DELETE</button></a>
 <a href="{% url 'blog:list' %}"><button>List</button></a>
 {% endblock %}

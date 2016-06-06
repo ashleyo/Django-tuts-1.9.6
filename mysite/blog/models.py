@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 
 def upload_location(instance, filename):
-    return "{}/{}".format(instance.id, filename)    
+    return "{}/{}".format(instance.slug, filename)    
 
 class Post(models.Model):
     title = models.CharField(max_length=120)
