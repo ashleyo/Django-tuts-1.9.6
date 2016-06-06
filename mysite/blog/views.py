@@ -19,8 +19,8 @@ def post_create(request):
     context = { 'form': form }
     return render(request, 'blog/post_form.html', context)
 
-def post_detail(request,id=1):
-    context = get_object_or_404(Post,id=id)
+def post_detail(request,slug=None):
+    context = get_object_or_404(Post,slug=slug)
     return render(request, 'blog/post_detail.html', {'post':context})
     
 def post_list(request): 
