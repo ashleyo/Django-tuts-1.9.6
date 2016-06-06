@@ -6,25 +6,15 @@
   "windows": { "command": "powershell", "args": ["-Command", "python", "${workspaceRoot}/mysite/manage.py" ] },
   "tasks": [
     {
-<<<<<<< HEAD
       "taskName": "django check",
       "args": ["${workspaceRoot}/mysite/manage.py", "check"],
-=======
-      "taskName": "check",
-      "args": ["check"],
->>>>>>> bbddde21d0b5bb7d1ced34881df2969cf75c6a37
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": false
     },
     {
-<<<<<<< HEAD
       "taskName": "django runserver",
       "args": ["${workspaceRoot}/mysite/manage.py","runserver"],
-=======
-      "taskName": "runserver",
-      "args": ["runserver"],
->>>>>>> bbddde21d0b5bb7d1ced34881df2969cf75c6a37
       "suppressTaskName": true,
       "isBuildCommand": true,
       "isTestCommand": false
@@ -42,7 +32,7 @@
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": true
-    }
+    },
     {
       "taskName": "git log",
       "args": ["git","log","--pretty=oneline"],
