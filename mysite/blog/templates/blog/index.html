@@ -9,7 +9,9 @@
 {% for post in posts %}
     <div class="col-sm-6">
         <div class="thumbnail">
-            <!-- <img src="..." alt="..."> -->
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="img-responsive" />
+            {% endif %}
             <div class="caption">
                 <h3><a href="{{ post.get_absolute_url }}" >{{ post.title }}</a></br> <small>{{post.updated|timesince}}</small></h3>
                 <p>{{ post.content|linebreaks|truncatechars:120}}</p>
@@ -19,9 +21,30 @@
     </div> 
 {% cycle "" "<div class='col-sm-12'><hr/></div></div> <div class='row'>" %}
 {% endfor %}
-
 </div>
 
-<a href="{% url 'blog:create' %}"><button>New Post</button></a>
+<div class='col-sm-2'><a href="{% url 'blog:create' %}" class="btn btn-default" role="button">New Post</a></div>
+
+<div class="col-offset-sm-1 col-sm-6">
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a class="btn btn-default btn-sm" href="?{{ page_request_var }}={{ posts.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+            </span>
+
+            {% if posts.has_next %}
+                <a class="btn btn-default btn-sm" href="?{{ page_request_var }}={{ posts.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
+</div>
+
+
+
+
 </div>
 {% endblock %}
