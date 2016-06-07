@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.db.models.signals import pre_save
+#from django.db.models.signals import pre_save
 from django.utils.text import slugify
 
 
@@ -24,6 +24,10 @@ class Post(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={"slug":self.slug})
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = create_slug(self)
+        super().save(*args, **kwargs)
         
     class Meta:
         ordering=["-timestamp","-updated"]
@@ -39,10 +43,10 @@ def create_slug(instance, new_slug=None) :
         return create_slug(instance, new_slug=new_slug) 
     return slug      
         
-def pre_save_Post_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = create_slug(instance)
+#def pre_save_Post_receiver(sender, instance, *args, **kwargs):
+#    if not instance.slug:
+#        instance.slug = create_slug(instance)
 
-pre_save.connect(pre_save_Post_receiver, sender=Post)
+#pre_save.connect(pre_save_Post_receiver, sender=Post)
     
     
