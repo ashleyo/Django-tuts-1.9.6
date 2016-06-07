@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -6,11 +7,13 @@ from .models import Post
 from .forms import PostForm
 
 # Create your views here.
+@login_required(login_url='wiki:login')
 def post_create(request):
     form = PostForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
             instance = form.save(commit=False)
+            instance.author = request.user
             instance.save()
             messages.success(request, "Post Created")
             return redirect(instance.get_absolute_url())
