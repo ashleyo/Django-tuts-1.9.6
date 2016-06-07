@@ -12,8 +12,8 @@ def post_create(request):
     form = PostForm(request.POST or None, request.FILES or None)
     if request.method == 'POST':
         if form.is_valid():
-            instance.author = request.user
             instance = form.save(commit=False)
+            instance.author = request.user
             instance.save()
             messages.success(request, "Post Created")
             return redirect(instance.get_absolute_url())
