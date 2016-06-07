@@ -1,0 +1,23 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+  "version": "0.1.0",
+  "isShellCommand": true,
+  "windows": { "command": "powershell", "args": ["-Command"] },
+  "tasks": [
+    {
+      "taskName": "check",
+      "args": ["${workspaceRoot}/manage.py", "check"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": false
+    },
+    {
+      "taskName": "runserver",
+      "args": ["${workspaceRoot}/manage.py", "runserver"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": false
+    }
+  ]
+}

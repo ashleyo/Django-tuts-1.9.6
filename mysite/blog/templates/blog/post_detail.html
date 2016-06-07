@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+{% block title %}{{ block.super }}{{ page.id }}{% endblock %}
+
+{% block content %}
+{% if post %}
+<header><h2>{{ post.title }} <small>Post #{{post.id}} Last Edited {{post.updated}}</small></h2></header>
+    {% if post.image %}<img src='{{ post.image.url }}' class='img-responsive' />{% endif %}
+    <div style="border:1px solid lightgrey"> 
+    <p>{{ post.content|linebreaks}}</p>
+    <footer><h6>Created {{post.timestamp}}</h6></footer>
+    </div>   
+{% else %}
+Post not found
+{% endif %}
+<a href="{% url 'blog:update' post.slug %}"><button>Edit</button></a>
+<a href="{% url 'blog:delete' post.slug %}"><button>DELETE</button></a>
+<a href="{% url 'blog:list' %}"><button>List</button></a>
+{% endblock %}

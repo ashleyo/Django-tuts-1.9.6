@@ -6,18 +6,40 @@
   "windows": { "command": "powershell", "args": ["-Command"] },
   "tasks": [
     {
-      "taskName": "check",
-      "args": ["${workspaceRoot}/manage.py", "check"],
+
+      "taskName": "django check",
+      "args": ["${workspaceRoot}/mysite/manage.py", "check"],
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": false
     },
     {
-      "taskName": "runserver",
-      "args": ["${workspaceRoot}/manage.py", "runserver"],
+      "taskName": "django runserver",
+      "args": ["${workspaceRoot}/mysite/manage.py","runserver"],
+      "suppressTaskName": true,
+      "isBuildCommand": true,
+      "isTestCommand": false
+    },
+    {
+      "taskName": "django test",
+      "args": ["${workspaceRoot}/mysite/manage.py","test"],
       "suppressTaskName": true,
       "isBuildCommand": false,
-      "isTestCommand": false
+      "isTestCommand": true
+    },
+    {
+      "taskName": "git status",
+      "args": ["git","status"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": true
+    },
+    {
+      "taskName": "git log",
+      "args": ["git","log","--pretty=oneline"],
+      "suppressTaskName": true,
+      "isBuildCommand": false,
+      "isTestCommand": true
     }
   ]
 }
