@@ -3,11 +3,7 @@
     // for the documentation about the tasks.json format
   "version": "0.1.0",
   "isShellCommand": false,
-<<<<<<< HEAD
-  "windows": { "command": "powershell", "args": ["-Command"] },
-=======
   "windows": { "command": "powershell", "args": ["-Command"], "showOutput": "always" },
->>>>>>> 07ff17831e02e9824274559f22b780329a109965
   "tasks": [
     {
       "taskName": "django check",
