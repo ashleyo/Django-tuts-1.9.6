@@ -42,7 +42,8 @@ def post_list(request):
         queryset = paginator.page(paginator.num_pages)
   
     return render(request, 'blog/index.html', {'posts':queryset, 'page_request_var':page_request_var})
-    
+
+@login_required(login_url='wiki:login')    
 def post_update(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=instance)
@@ -61,6 +62,7 @@ def post_update(request, slug=None):
             }
     return render(request, 'blog/post_form.html', context)
 
+@login_required(login_url='wiki:login')
 def post_delete(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     m = "Deleted {} {}".format(instance.id,instance.title)

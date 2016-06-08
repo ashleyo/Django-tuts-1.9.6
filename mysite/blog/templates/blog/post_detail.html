@@ -7,6 +7,17 @@
     {% if post.image %}<img src='{{ post.image.url }}' class='img-responsive' />{% endif %}
     <div style="border:1px solid lightgrey"> 
     <p>{{ post.content|linebreaks}}</p>
+    <hr />
+        <!-- Googl+ comment support -->
+        <div>Posting to: {{ request.build_absolute_uri }}. Comments are <strong>not</strong> secure. Will not work without a proper domain.</div>
+        <div class="g-comments"
+            data-href="{{ request.build_absolute_uri }}"
+            data-width="580"
+            data-first_party_property="BLOGGER"
+            data-view_type="FILTERED_POSTMOD">
+        </div>
+        <!-- end of Google+ comment support -->
+
     <footer><h6>Created {{post.timestamp}}</h6></footer>
     </div>   
 {% else %}
