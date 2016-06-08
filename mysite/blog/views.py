@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 from .models import Post
 from .forms import PostForm
 
@@ -28,7 +29,14 @@ def post_detail(request,slug=None):
     
 def post_list(request): 
     queryset_list = Post.objects.all()
-    
+    query_term = request.GET.get('q')
+    if query_term:
+        queryset_list = queryset_list.filter(
+            Q(title__icontains=query_term) |
+            Q(content__icontains=query_term) |
+            Q(author__first_name__icontains=query_term) |
+            Q(author__last_name__icontains=query_term)
+            ).distinct()
     paginator = Paginator(queryset_list, 6) # Show 6 posts per page
     page_request_var = 'page'
     page = request.GET.get(page_request_var)
