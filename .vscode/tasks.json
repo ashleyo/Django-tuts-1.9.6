@@ -2,11 +2,10 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
   "version": "0.1.0",
-  "isShellCommand": true,
-  "windows": { "command": "powershell", "args": ["-Command"] },
+  "isShellCommand": false,
+  "windows": { "command": "powershell", "args": ["-Command"], "showOutput": "always" },
   "tasks": [
     {
-
       "taskName": "django check",
       "args": ["${workspaceRoot}/mysite/manage.py", "check"],
       "suppressTaskName": true,
@@ -36,7 +35,7 @@
     },
     {
       "taskName": "git log",
-      "args": ["git","log","--pretty=oneline"],
+      "args": ["git","log","--pretty=oneline", "-5"],
       "suppressTaskName": true,
       "isBuildCommand": false,
       "isTestCommand": true
