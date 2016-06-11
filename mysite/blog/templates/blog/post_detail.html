@@ -1,4 +1,5 @@
 {% extends 'mysite/base.html' %}
+{% load urlify %}
 {% block title %}Blog #{{ post.id }}{% endblock %}
 
 {% block content %}
@@ -6,7 +7,7 @@
 <header><h2>{{ post.title }} <small>Post #{{post.id}} Last Edited {{post.updated}} Author: {{ post.author.get_full_name }}</small></h2></header>
     {% if post.image %}<img src='{{ post.image.url }}' class='img-responsive' />{% endif %}
     <div style="border:1px solid lightgrey"> 
-    <p>{{ post.content|linebreaks}}</p>
+    <p>{{ post.content|markup|safe|linebreaks}}</p>
     <hr />
         
 
@@ -21,7 +22,6 @@ Post not found
 {% endblock %}
 {% block comment %}
 <!-- Google+ comment support -->
-        Hmmm....
         <div>Posting to: {{ request.build_absolute_uri }}. Comments are <strong>not</strong> secure. Will not work without a proper domain.</div>
         <script src="https://apis.google.com/js/plusone.js"></script>
         <div class="g-comments"
