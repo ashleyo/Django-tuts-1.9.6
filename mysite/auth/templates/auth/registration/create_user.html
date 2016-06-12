@@ -1,11 +1,11 @@
-{% extends "wiki/base.html" %}
+{% extends "auth/base.html" %}
 {% block title %}Register{% endblock %}
 {% block content %}
 
 {% if form.errors %}
     <p>There was an error on the form. Please try again.</p>
 {% endif %}
-<form class="form-registration" method="post" action="{% url 'wiki:register' %}">
+<form class="form-registration" method="post" action="{% url 'auth:register' %}">
 {% csrf_token %}
 
 

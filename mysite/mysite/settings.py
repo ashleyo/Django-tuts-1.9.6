@@ -29,8 +29,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+BASE_PROJECT_PREFIX = 'mysite'
 
 INSTALLED_APPS = [
+    'auth.apps.AuthConfig',
     'blog.apps.BlogConfig',
     'polls.apps.PollsConfig',
     'wiki.apps.WikiConfig',
@@ -55,12 +57,13 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'mysite.urls'
+ROOT_URLCONF = BASE_PROJECT_PREFIX + '.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        #'DIRS': [os.path.join(BASE_DIR, BASE_PROJECT_PREFIX,'templates')],
+        'DIRS' : ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,12 +138,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL = '/wiki/Start/'
-LOGIN_URL = '/wiki/login/'
+LOGIN_REDIRECT_URL = '/wiki/page/Start/'
+LOGIN_URL = '/auth/login/'
 
 LOGGING = {
     'version': 1,
