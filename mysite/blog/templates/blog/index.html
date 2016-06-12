@@ -1,8 +1,8 @@
-{% extends 'blog/base.html' %}
-{% block title %}{{block.super}} All{% endblock %}
+{% extends 'mysite/base.html' %}
+{% load urlify %}
+{% block title %}Blog Index{% endblock %}
 {% block content %}
-
-<div class="col-sm-10 col-sm-offset-1">
+<div class="row">
 <header><h1>
 {% if request.GET.q %}
     Posts <small>filtered by '{{ request.GET.q }}'</small>
@@ -14,6 +14,7 @@
     <input type='text' name='q' placeholder="All..." value='{{ request.GET.q }}' />
     <input type='submit' value='Search' />
 </form>
+
 
 <div class="row">
 
@@ -28,7 +29,7 @@
                 {% if post.author.get_full_name %}
                     <p>Author: {{ post.author.get_full_name }}</p>
                 {% endif %}
-                <p>{{ post.content|linebreaks|truncatechars:120}}</p>
+                <p>{{ post.content|markup|safe|linebreaks|truncatechars:120}}</p>
                 <p><a href="{{ post.get_absolute_url }}" class="btn btn-primary" role="button">View</a></p>
             </div>
         </div>   

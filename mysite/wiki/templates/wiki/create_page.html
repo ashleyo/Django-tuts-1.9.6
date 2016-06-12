@@ -1,10 +1,7 @@
-<html>
-<head>
-    <title>Create</title>
-</head>
-<body>
-    <h1>{{page_name}}</h1>
+{% extends 'mysite/base.html' %}
+{% block title %}Create {{page_name}}{% endblock %}
+{% block pageheader %}<h1>{{page_name}}</h1>{% endblock %}
+{% block content %}
     This page does not exist.
     <a href="{% url 'wiki:edit_page' page_name %}">Create?</a>
-</body>
-</html>
+{% endblock %}

@@ -13,6 +13,6 @@ def markup(text):
 @register.filter
 def wikify(text):
     return wikiWordV2.sub(r'''
-    <a href="/wiki/\1/">\1</a>
+    <a href="/wiki/page/\1/">\1</a>
     ''', text)
     
