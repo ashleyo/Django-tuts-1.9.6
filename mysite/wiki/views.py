@@ -8,8 +8,10 @@ from django.template.response import TemplateResponse
 
 from .forms import SearchForm, UploadFileForm
 from .models import Page, Tag, UserFileUpload, HitsCounter #,NavItem
+
 from .apps import WikiConfig as thisApp
 from nav.models import NavItem
+nav = NavItem.get_nav_by_app(thisApp.name)
 
 import logging
 logger = logging.getLogger('custom')
@@ -36,13 +38,10 @@ class HitCounterManager:
         self.hc.save()
         return response
 
-nav = NavItem.objects.order_by('priority').filter(Q(tag__contains=thisApp.name) | Q(tag__contains='all'))
-
-
-# An example of how a custom Template response could be used (easier to filter the nav above)
-# this technique would be better if a template needs to know which app is using it
+#convenience - allows a view to decide whether it wants NavItems
+#or not without bothering about the implementation
 def render_and_nav(request, template, context):
-    context["navitems"] = nav
+    context["navitems"] = NavItem.get_nav_by_app(thisApp.name)
     request.current_app = thisApp.name
     return TemplateResponse(request, template, context)
 
@@ -67,8 +66,8 @@ StaticPages["Search"] = SearchPageView
 def HelpPageView(request):
     agent = request.META["HTTP_USER_AGENT"]
     hits = HitCounterManager.hc.counter
-    return render(request, 'wiki/help_page.html', {'hits':hits, 'navitems':nav,'agent':agent})
-    #return render_and_nav(request, 'wiki/help_page.html', {'hits':hits, 'agent':agent})
+    #return render(request, 'wiki/help_page.html', {'hits':hits, 'navitems':nav,'agent':agent})
+    return render_and_nav(request, 'wiki/help_page.html', {'hits':hits, 'agent':agent})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
@@ -79,7 +78,6 @@ def IndexPageView(request):
     
 StaticPages["Index"] = IndexPageView
 
-# Create your views here.
 @login_required(login_url='auth:login')
 def edit_page(request, page_name):
     try:
@@ -118,25 +116,25 @@ def view_page(request, page_name):
         page = Page.objects.get(pk=page_name)
     except Page.DoesNotExist:
         return render(request,'wiki/create_page.html', { 'page_name':page_name})
-    return render(request, 'wiki/view_page.html', {
-    #return render_and_nav(request, 'wiki/view_page.html', {
+    #return render(request, 'wiki/view_page.html', {
+    return render_and_nav(request, 'wiki/view_page.html', {
         'page_name':page_name, 
         'content':page.content,
         'tags':page.tags.all(), 
-        'navitems':nav,
+        #'navitems':nav,
         })
     
 def view_tag(request, tag_name):
-    context = {'navitems':nav, 'tag_name':tag_name}
+    context = {'tag_name':tag_name}
     if tag_name.upper() == 'ALL':
         context['pages'] = Page.objects.all()
     else:
         tag = Tag.objects.get(pk=tag_name)
         context['pages'] = tag.page_set.all()
-    return render(request,'wiki/view_tag.html', context)
+    return render_and_nav(request,'wiki/view_tag.html', context)
     
 def upload_file(request):
-    context = {'navitems':nav}
+    context = {}
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -145,5 +143,6 @@ def upload_file(request):
         form = UploadFileForm()
     context['form'] = form
     context['files'] = UserFileUpload.objects.all().order_by('upload')
-    return render(request, 'wiki/upload.html', context)
+    return render_and_nav(request, 'wiki/upload.html', context)
+    
 StaticPages["Upload"] = upload_file    

@@ -17,19 +17,6 @@ class Page(models.Model):
     def __str__(self):
         return self.name
 
-''''
-class NavItem(models.Model):
-    display = models.CharField(max_length=20)
-    redirect = models.CharField(max_length=63)
-    redirectPage = models.CharField(max_length=63, blank=True, default="")
-    priority = models.SmallIntegerField()
-    tag = models.CharField(max_length=10)
-    
-    def __str__(self):
-        return self.display
-'''
-
-
 class UserFileUpload(models.Model):
     upload = models.FileField(upload_to='uploads/')
     #file will be saved to MEDIA_ROOT/uploads
