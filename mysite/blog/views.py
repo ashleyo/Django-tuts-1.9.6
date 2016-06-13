@@ -6,6 +6,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from .models import Post
 from .forms import PostForm
+from .apps import BlogConfig as thisApp
+from nav.models import NavItem
+
+nav = NavItem.objects.order_by('priority').filter(Q(tag__contains=thisApp.name) | Q(tag__contains='all'))
 
 # Create your views here.
 @login_required(login_url='wiki:login')
@@ -48,8 +52,8 @@ def post_list(request):
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
-  
-    return render(request, 'blog/index.html', {'posts':queryset, 'page_request_var':page_request_var})
+    context = {'posts':queryset, 'page_request_var':page_request_var, 'navitems': nav}
+    return render(request, 'blog/index.html', context)
 
 @login_required(login_url='wiki:login')    
 def post_update(request, slug=None):
