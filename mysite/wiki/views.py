@@ -1,11 +1,14 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.template.response import TemplateResponse
 # from django.db.models import F
 
 from .forms import SearchForm, UploadFileForm
 from .models import Page, Tag, UserFileUpload, HitsCounter #,NavItem
+from .apps import WikiConfig as thisApp
 from nav.models import NavItem
 
 import logging
@@ -33,9 +36,15 @@ class HitCounterManager:
         self.hc.save()
         return response
 
-nav = NavItem.objects.order_by('priority')[:]
+nav = NavItem.objects.order_by('priority').filter(Q(tag__contains=thisApp.name) | Q(tag__contains='all'))
 
 
+# An example of how a custom Template response could be used (easier to filter the nav above)
+# this technique would be better if a template needs to know which app is using it
+def render_and_nav(request, template, context):
+    context["navitems"] = nav
+    request.current_app = thisApp.name
+    return TemplateResponse(request, template, context)
 
 StaticPages = { "Index":None, "Search": None, "Help": None, "Upload": None}
  
@@ -59,6 +68,7 @@ def HelpPageView(request):
     agent = request.META["HTTP_USER_AGENT"]
     hits = HitCounterManager.hc.counter
     return render(request, 'wiki/help_page.html', {'hits':hits, 'navitems':nav,'agent':agent})
+    #return render_and_nav(request, 'wiki/help_page.html', {'hits':hits, 'agent':agent})
 StaticPages["Help"] = HelpPageView
     
 def IndexPageView(request):
@@ -109,6 +119,7 @@ def view_page(request, page_name):
     except Page.DoesNotExist:
         return render(request,'wiki/create_page.html', { 'page_name':page_name})
     return render(request, 'wiki/view_page.html', {
+    #return render_and_nav(request, 'wiki/view_page.html', {
         'page_name':page_name, 
         'content':page.content,
         'tags':page.tags.all(), 
