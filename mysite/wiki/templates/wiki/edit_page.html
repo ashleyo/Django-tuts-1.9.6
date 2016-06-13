@@ -1,10 +1,13 @@
 {% extends 'mysite/base.html' %}{% block title %}Edit {{page_name}}{% endblock %}
-{% block pageheader %}{% endblock %}
+{% load staticfiles %}
+{% block pageheader %}Editing {{ page_name }}{% endblock %}
 {% block content %}
     <header><h3>{{page_name}}</h3></header>
+    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script>tinymce.init({ selector:'#id_content', plugins: 'autolink' });</script>
     <form method="post" action="{% url 'wiki:save_page' page_name %}">
     {% csrf_token %}
-        <textarea name="content" rows="10" cols="40">
+        <textarea id="id_content" name="content" rows="10" cols="40">
 {{content}}
         </textarea>
         <p><span class="label label-info">Tags:</span> <input name="tags" value="{{tags}}" maxlength="40" size = "20"/></p>

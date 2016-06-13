@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 # from django.db.models import F
 
 from .forms import SearchForm, UploadFileForm
-from .models import Page, NavItem, Tag, UserFileUpload, HitsCounter
+from .models import Page, Tag, UserFileUpload, HitsCounter #,NavItem
+from nav.models import NavItem
 
 import logging
 logger = logging.getLogger('custom')

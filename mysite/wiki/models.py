@@ -17,7 +17,7 @@ class Page(models.Model):
     def __str__(self):
         return self.name
 
-
+''''
 class NavItem(models.Model):
     display = models.CharField(max_length=20)
     redirect = models.CharField(max_length=63)
@@ -27,6 +27,7 @@ class NavItem(models.Model):
     
     def __str__(self):
         return self.display
+'''
 
 
 class UserFileUpload(models.Model):

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'auth.apps.AuthConfig',
     'blog.apps.BlogConfig',
     'polls.apps.PollsConfig',
+    'nav.apps.NavConfig',
     'wiki.apps.WikiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
