@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
-#from django.db.models.signals import pre_save
 from django.utils.text import slugify
-
 
 def upload_location(instance, filename):
     return "{}/{}".format(instance.slug, filename)    
@@ -44,11 +42,6 @@ def create_slug(instance, new_slug=None) :
         new_slug = "{}-{}".format(slug,qs.first().id)
         return create_slug(instance, new_slug=new_slug) 
     return slug      
-        
-#def pre_save_Post_receiver(sender, instance, *args, **kwargs):
-#    if not instance.slug:
-#        instance.slug = create_slug(instance)
 
-#pre_save.connect(pre_save_Post_receiver, sender=Post)
     
     
