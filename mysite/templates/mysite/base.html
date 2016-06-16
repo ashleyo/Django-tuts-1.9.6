@@ -6,13 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <title>{% block title %}Mysite - title missing{% endblock %}</title>
     
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'bootstrap/css/bootstrap-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'simpleMDE/css/simplemde.min.css' %}" rel="stylesheet">
+    
+    <!-- TODO fix up of paths needed here -->
     <link rel="stylesheet" href="{% static 'wiki/css/styles.css' %}">
+
     {% block page-specific-statics %}{% endblock %}
   </head>
   
