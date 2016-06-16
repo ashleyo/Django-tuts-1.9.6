@@ -3,9 +3,8 @@
 {% block content %}
 <div class 'col-sm-6 col-offset-3'>
 <h1>Post Form</h1>
-    <!-- <script src="{% static 'blog/js/tinymce/tinymce.min.js' %}"></script> -->
-    <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
-    <script>tinymce.init({ selector:'#id_content', plugins: 'autolink' });</script>
+    <!-- <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+    <script>tinymce.init({ selector:'#id_content', plugins: 'autolink' });</script>-->
 <form method='POST' action="#" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form.as_p }}
@@ -13,4 +12,10 @@
 <a href="{% url 'blog:list' %}" class="btn btn-danger">Cancel</a>
 </form>
 </div>
+<script>
+    var simplemde = new SimpleMDE({ 
+    element: document.getElementById("id_content"), 
+    toolbar: ["preview", "|", "bold", "italic", "strikethrough", "|", "heading", "unordered-list", "ordered-list", "|", "code", "quote", "|", "link", "image", "table", "horizontal-rule", "guide"]
+    });
+    </script>
 {% endblock %}
