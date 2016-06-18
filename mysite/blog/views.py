@@ -1,7 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from .models import Post
@@ -9,10 +8,7 @@ from .forms import PostForm
 
 from .apps import BlogConfig as thisApp
 from nav.models import NavItem
-#nav = NavItem.get_nav_by_app(thisApp.name)
 
-
-# Create your views here.
 @login_required(login_url='wiki:login')
 def post_create(request):
     form = PostForm(request.POST or None, request.FILES or None)
