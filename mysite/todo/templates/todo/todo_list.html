@@ -1,14 +1,25 @@
 {% extends 'mysite/base.html' %}
+{% load static %}   
+{% block page-specific-statics %}<link rel="stylesheet" href="{% static 'todo/css/styles.css' %}">{% endblock %}
 {% block title %}ToDo List{% endblock %}
 {% block pageheader %}ToDo{% endblock %}
 {% block content %}
-        <section><header><h3>Items</h3></header>
-        <ul>
+        <section class="panel panel-default">
+        <!-- Default panel contents -->
+        <header class="panel-heading">Items</header>
+        <table>
+        <tr><th>Complete</th><th>Short Description</th><th>Due By</th><th>Priority</th></tr>
         {% for todo in todos %}
-            <li>{{ todo.name }}</li>
+            <tr>
+                <td>{{ todo.complete }}</td>
+                <td>{{ todo.name }}</td>
+                 <td>{{ todo.target_date }}</td>
+                 <td>{{ todo.get_priority }}</td>
+
+            </tr>
         {% endfor %} 
         
-        </ul>
+        </table>
         </section>
         
      <footer class="container">
