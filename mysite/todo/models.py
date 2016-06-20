@@ -4,8 +4,8 @@ class ToDoFolder(models.Model):
     name=models.CharField(max_length=32)
     
     def save(self, *args, **kwargs):
-        if (pk==1): 
-            name='Unfiled'
+        if (self.id==1): 
+            self.name='Unfiled'
         super().save(self, *args, **kwargs)
 
     def __str__(self):
